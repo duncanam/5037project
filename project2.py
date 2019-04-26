@@ -263,35 +263,21 @@ hst_vxz = 1/(nx[0]*nx[2])*np.sum(hst_v, axis=(0,2))
 hst_wxz = 1/(nx[0]*nx[2])*np.sum(hst_w, axis=(0,2))
 
 # Plot as a function of y:
-plt.figure(figsize=(10,7), dpi=160)
+plt.figure(figsize=(10,6), dpi=160)
 
-plt.subplot(231)
-plt.plot(np.linspace(0,lx[1],nx[1]), hit_uxz)
-plt.title('HIT uxz Average')
+plt.subplot(121)
+plt.plot(np.linspace(0,lx[1],nx[1]), hit_uxz, label='uxz Average')
+plt.plot(np.linspace(0,lx[1],nx[1]), hit_vxz, label='vxz Average')
+plt.plot(np.linspace(0,lx[1],nx[1]), hit_wxz, label='wxz Average')
+plt.title('HIT')
+plt.legend()
 
-plt.subplot(232)
-plt.plot(np.linspace(0,lx[1],nx[1]), hit_vxz)
-plt.title('HIT vxz Average')
-
-
-plt.subplot(233)
-plt.plot(np.linspace(0,lx[1],nx[1]), hit_wxz)
-plt.title('HIT wxz Average')
-
-
-plt.subplot(234)
-plt.plot(np.linspace(0,lx[1],nx[1]), hst_uxz)
-plt.title('HST uxz Average')
-
-
-plt.subplot(235)
-plt.plot(np.linspace(0,lx[1],nx[1]), hst_vxz)
-plt.title('HST vxz Average')
-
-
-plt.subplot(236)
-plt.plot(np.linspace(0,lx[1],nx[1]), hst_wxz)
-plt.title('HST wxz Average')
+plt.subplot(122)
+plt.plot(np.linspace(0,lx[1],nx[1]), hst_uxz, label='uxz Average')
+plt.plot(np.linspace(0,lx[1],nx[1]), hst_vxz, label='vxz Average')
+plt.plot(np.linspace(0,lx[1],nx[1]), hst_wxz, label='wxz Average')
+plt.title('HST')
+plt.legend()
 
 
 
