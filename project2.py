@@ -173,12 +173,13 @@ if plotslc == True:
                     min_hst_v, min_hst_w])
     slcmax = np.max([max_hit_u, max_hit_v, max_hit_w, max_hst_u, 
                     max_hst_v, max_hst_w])
-    slccmap = 'jet'
-    fsize = 12
-    tsize = 8
+
+    slccmap = 'jet' # set the colormap 
+    fsize = 8 # fontsize
+    tsize = 6 # ticksize
     
-    # Define the subplot figure:
-    hitslc, hitaxs = plt.subplots(3,3, figsize=(6,10), dpi=160)
+    ## Define the subplot figure:
+    hitslc, hitaxs = plt.subplots(3,3, figsize=(10,6), dpi=160)
     
     # Plot HIT k=1:
     hitaxs[0,0].imshow(hit_u[:,:,0], vmin=slcmin, vmax=slcmax, cmap=slccmap)
@@ -203,13 +204,13 @@ if plotslc == True:
     hitaxs[1,2].set_title('HIT v @ k=256',fontsize=fsize)
     im = hitaxs[2,2].imshow(hit_w[:,:,255], vmin=slcmin, vmax=slcmax, cmap=slccmap)
     hitaxs[2,2].set_title('HIT w @ k=256',fontsize=fsize)
-    
+
     # Set the colorbar:
     cax = hitslc.add_axes([0.03, 0.03, 0.93, 0.02])
     hitslc.colorbar(im,cax=cax, orientation='horizontal')
     
     # Define the subplot figure:
-    hstslc, hstaxs = plt.subplots(3,3, figsize=(6,10), dpi=160)
+    hstslc, hstaxs = plt.subplots(3,3, figsize=(10,6), dpi=160)
     
     # Plot HST k=1:
     hstaxs[0,0].imshow(hst_u[:,:,0], vmin=slcmin, vmax=slcmax, cmap=slccmap)
@@ -238,7 +239,7 @@ if plotslc == True:
     # Set the colorbar:
     cax = hstslc.add_axes([0.03, 0.03, 0.93, 0.02])
     hstslc.colorbar(im,cax=cax, orientation='horizontal')
-    
+
     # Set tick font size for all:
     for i in range(3):
         for j in range(3):
@@ -280,20 +281,28 @@ plt.title('HST')
 plt.legend()
 
 
+######################################################################
+# CALCULATE AND PLOT XY FIELDS OF FLUCTUATING COMPONENTS 
+
+for j in range(nx[1]):
+    hst_up = hst_u[:,j,:] - hst_uxz[j]
+    hst_vp = hst_v[:,j,:] - hst_vxz[j]
+    hst_wp = hst_w[:,j,:] - hst_wxz[j]
+
+
+slccmap = 'jet' # set the colormap 
+fsize = 8 # fontsize
+tsize = 6 # ticksize
 
 
 
 
-
-
-
-
-
-
-
-
-
-
+## Define the subplot figure:
+#hitslc, hitaxs = plt.subplots(3,3, figsize=(10,6), dpi=160)
+#
+## Plot HIT k=1:
+#hitaxs[0,0].imshow(hit_u[:,:,0], vmin=slcmin, vmax=slcmax, cmap=slccmap)
+#hitaxs[0,0].set_title('HIT u @ k=1',fontsize=fsize)
 
 
 
