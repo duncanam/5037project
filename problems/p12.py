@@ -71,6 +71,3 @@ def p12(data, data_maxmin):
     ax2.plot_trisurf(verts4[:, 0], verts4[:,1], faces4, 
             verts4[:, 2], color=(0,0,1,1), lw=1)
 
-    # Show the data:
-    plt.show()
-
