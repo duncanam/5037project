@@ -383,14 +383,73 @@ hit_npf = [hit_upf, hit_vpf, hit_wpf]
 
 # Allocate for Reynolds Stresses
 hst_uipuip_xz = np.zeros((3,3,nx[1]))
+hit_uipuip_xyz = np.zeros((3,3))
 
+# Calculate Reynolds Stresses
 for i in range(3):
     for j in range(3):
         # Multiply the u'_i together at every location: 
         hst_uipuip = hst_np[i]*hst_np[j]
+        hit_uipuip = hit_npf[i]*hit_npf[j]
 
-        # Calculate <>xz of this quantity 
+        # Calculate <>xz of the HST ui'ui', or Reynolds Stress
         hst_uipuip_xz[i,j,:] = 1/(nx[0]*nx[2])*np.sum(hst_uipuip, axis=(0,2))
+
+        # Calculate <>xyz of the HIT ui'ui', or Reynolds Stress
+        hit_uipuip_xyz[i,j] = 1/(nx[0]*nx[1]*nx[2])*np.sum(hit_uipuip)
+
+# Plot the data
+plt.figure(figsize=(10,6), dpi=160)
+plt.suptitle('HST <u\'iu\'i>xz vs. HIT <u\'iu\'i>xyz')
+legsize=6
+
+plt.subplot(331)
+plt.plot(np.arange(nx[1]), hst_uipuip_xz[0,0,:], label='HST u\'u\'')
+plt.plot(np.arange(nx[1]), hit_uipuip_xyz[0,0]*np.ones(nx[1]), label='HIT u\'u\'')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(332)
+plt.plot(np.arange(nx[1]), hst_uipuip_xz[0,1,:], label='HST u\'v\'')
+plt.plot(np.arange(nx[1]), hit_uipuip_xyz[0,1]*np.ones(nx[1]), label='HIT u\'v\'')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(333)
+plt.plot(np.arange(nx[1]), hst_uipuip_xz[0,2,:], label='HST u\'w\'')
+plt.plot(np.arange(nx[1]), hit_uipuip_xyz[0,2]*np.ones(nx[1]), label='HIT u\'w\'')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(334)
+plt.plot(np.arange(nx[1]), hst_uipuip_xz[1,0,:], label='HST v\'u\'')
+plt.plot(np.arange(nx[1]), hit_uipuip_xyz[1,0]*np.ones(nx[1]), label='HIT v\'u\'')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(335)
+plt.plot(np.arange(nx[1]), hst_uipuip_xz[1,1,:], label='HST v\'v\'')
+plt.plot(np.arange(nx[1]), hit_uipuip_xyz[1,1]*np.ones(nx[1]), label='HIT v\'v\'')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(336)
+plt.plot(np.arange(nx[1]), hst_uipuip_xz[1,2,:], label='HST v\'w\'')
+plt.plot(np.arange(nx[1]), hit_uipuip_xyz[1,2]*np.ones(nx[1]), label='HIT v\'w\'')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(337)
+plt.plot(np.arange(nx[1]), hst_uipuip_xz[2,0,:], label='HST w\'u\'')
+plt.plot(np.arange(nx[1]), hit_uipuip_xyz[2,0]*np.ones(nx[1]), label='HIT w\'u\'')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(338)
+plt.plot(np.arange(nx[1]), hst_uipuip_xz[2,1,:], label='HST w\'v\'')
+plt.plot(np.arange(nx[1]), hit_uipuip_xyz[2,1]*np.ones(nx[1]), label='HIT w\'v\'')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(339)
+plt.plot(np.arange(nx[1]), hst_uipuip_xz[2,2,:], label='HST w\'w\'')
+plt.plot(np.arange(nx[1]), hit_uipuip_xyz[2,2]*np.ones(nx[1]), label='HIT w\'w\'')
+plt.legend(prop={'size': legsize})
+
+######################################################################
+
 
 ######################################################################
 # PRINT LINE END
@@ -400,5 +459,5 @@ print('\n')
 
 ######################################################################
 # SHOW FIGURES
-plt.close('all')
-#plt.show()
+#plt.close('all')
+plt.show()
