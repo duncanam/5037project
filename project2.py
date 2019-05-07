@@ -377,27 +377,20 @@ for i in range(3):
 
 ######################################################################
 # CALCULATE THE REYNOLDS STRESSES [1.8]
-#hst_ui_xz = np.zeros((3,nx[1],3))
-#for i in range(3):
-#    for k in range(3):
-#        hst_ui_xz[i,:,k] = hst_nxz[i]*hst_nxz[k]
-#
-#hst_uu_xz = hst_uxz*hst_uxz
-
-# Combine the HST u'_i data into one data structure
+# Combine the HST/HIT u'_i data into one data structure
 hst_np = [hst_up, hst_vp, hst_wp]
+hit_npf = [hit_upf, hit_vpf, hit_wpf]
 
-# Allocate for this massive structure about to come
-hst_uipuip = np.zeros((3,3,256,129,256))
+# Allocate for Reynolds Stresses
+hst_uipuip_xz = np.zeros((3,3,nx[1]))
 
-# Multiply the u'_i together at every location
 for i in range(3):
     for j in range(3):
+        # Multiply the u'_i together at every location: 
+        hst_uipuip = hst_np[i]*hst_np[j]
 
-
-
-
-
+        # Calculate <>xz of this quantity 
+        hst_uipuip_xz[i,j,:] = 1/(nx[0]*nx[2])*np.sum(hst_uipuip, axis=(0,2))
 
 ######################################################################
 # PRINT LINE END
