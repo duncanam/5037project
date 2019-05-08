@@ -498,6 +498,10 @@ hst_up_96_vec = np.reshape(hst_up[:,95,:],(nx[0]*nx[2]))
 hst_vp_96_vec = np.reshape(hst_vp[:,95,:],(nx[0]*nx[2]))
 hst_wp_96_vec = np.reshape(hst_wp[:,95,:],(nx[0]*nx[2])) 
 
+hit_up_vec = np.reshape(hit_upf,(nx[0]*nx[1]*nx[2])) 
+hit_vp_vec = np.reshape(hit_vpf,(nx[0]*nx[1]*nx[2])) 
+hit_wp_vec = np.reshape(hit_wpf,(nx[0]*nx[1]*nx[2])) 
+
 # Create a histogram of this data:
 hst_hist_32_u = np.histogram(hst_up_32_vec, bins=nbins, density=True)
 hst_hist_32_v = np.histogram(hst_vp_32_vec, bins=nbins, density=True)
@@ -508,6 +512,10 @@ hst_hist_64_w = np.histogram(hst_wp_64_vec, bins=nbins, density=True)
 hst_hist_96_u = np.histogram(hst_up_96_vec, bins=nbins, density=True)
 hst_hist_96_v = np.histogram(hst_vp_96_vec, bins=nbins, density=True)
 hst_hist_96_w = np.histogram(hst_wp_96_vec, bins=nbins, density=True)
+
+hit_hist_u = np.histogram(hit_up_vec, bins=nbins, density=True)
+hit_hist_v = np.histogram(hit_vp_vec, bins=nbins, density=True)
+hit_hist_w = np.histogram(hit_wp_vec, bins=nbins, density=True)
 
 # Find means of all: 
 hst_mu_32_u = np.mean(hst_up_32_vec)
@@ -520,6 +528,10 @@ hst_mu_96_u = np.mean(hst_up_96_vec)
 hst_mu_96_v = np.mean(hst_vp_96_vec)
 hst_mu_96_w = np.mean(hst_wp_96_vec)
 
+hit_mu_u = np.mean(hit_up_vec)
+hit_mu_v = np.mean(hit_vp_vec)
+hit_mu_w = np.mean(hit_wp_vec)
+
 # Find sigmas of all:
 hst_sigma_32_u = np.std(hst_up_32_vec)
 hst_sigma_32_v = np.std(hst_vp_32_vec)
@@ -530,6 +542,10 @@ hst_sigma_64_w = np.std(hst_wp_64_vec)
 hst_sigma_96_u = np.std(hst_up_96_vec)
 hst_sigma_96_v = np.std(hst_vp_96_vec)
 hst_sigma_96_w = np.std(hst_wp_96_vec)
+
+hit_sigma_u = np.std(hit_up_vec)
+hit_sigma_v = np.std(hit_vp_vec)
+hit_sigma_w = np.std(hit_wp_vec)
 
 # Define Gaussian function:
 def pdf(x,mu,sigma):
@@ -545,6 +561,10 @@ hst_gauss_64_w = pdf(hst_hist_64_w[1][1:], hst_mu_64_w, hst_sigma_64_w)
 hst_gauss_96_u = pdf(hst_hist_96_u[1][1:], hst_mu_96_u, hst_sigma_96_u)
 hst_gauss_96_v = pdf(hst_hist_96_v[1][1:], hst_mu_96_v, hst_sigma_96_v)
 hst_gauss_96_w = pdf(hst_hist_96_w[1][1:], hst_mu_96_w, hst_sigma_96_w)
+
+hit_gauss_u = pdf(hit_hist_u[1][1:], hit_mu_u, hit_sigma_u)
+hit_gauss_v = pdf(hit_hist_v[1][1:], hit_mu_v, hit_sigma_v)
+hit_gauss_w = pdf(hit_hist_w[1][1:], hit_mu_w, hit_sigma_w)
 
 # Plot the data:
 plt.figure(figsize=(10,6), dpi=160)
@@ -595,6 +615,26 @@ plt.subplot(339)
 plt.bar(hst_hist_96_w[1][1:], hst_hist_96_w[0],label='HST w j=96') 
 plt.plot(hst_hist_96_w[1][1:],hst_gauss_96_w, color='red')
 plt.legend(prop={'size': legsize})
+
+plt.figure(figsize=(10,6), dpi=160)
+plt.suptitle('HIT PDFs')
+legsize=6
+
+plt.subplot(131)
+plt.bar(hit_hist_u[1][1:], hit_hist_u[0], label='HIT u')
+plt.plot(hit_hist_u[1][1:], hit_gauss_u, color='red')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(132)
+plt.bar(hit_hist_v[1][1:], hit_hist_v[0], label='HIT v')
+plt.plot(hit_hist_v[1][1:], hit_gauss_v, color='red')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(133)
+plt.bar(hit_hist_w[1][1:], hit_hist_w[0], label='HIT w')
+plt.plot(hit_hist_w[1][1:], hit_gauss_w, color='red')
+plt.legend(prop={'size': legsize})
+
 
 ######################################################################
 # PRINT LINE END
