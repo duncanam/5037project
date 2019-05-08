@@ -502,7 +502,7 @@ hit_up_vec = np.reshape(hit_upf,(nx[0]*nx[1]*nx[2]))
 hit_vp_vec = np.reshape(hit_vpf,(nx[0]*nx[1]*nx[2])) 
 hit_wp_vec = np.reshape(hit_wpf,(nx[0]*nx[1]*nx[2])) 
 
-# Create a histogram of this data:
+# Create a histogram of this data (density true for PDF): 
 hst_hist_32_u = np.histogram(hst_up_32_vec, bins=nbins, density=True)
 hst_hist_32_v = np.histogram(hst_vp_32_vec, bins=nbins, density=True)
 hst_hist_32_w = np.histogram(hst_wp_32_vec, bins=nbins, density=True)
@@ -565,12 +565,6 @@ hst_gauss_96_w = pdf(hst_hist_96_w[1][1:], hst_mu_96_w, hst_sigma_96_w)
 hit_gauss_u = pdf(hit_hist_u[1][1:], hit_mu_u, hit_sigma_u)
 hit_gauss_v = pdf(hit_hist_v[1][1:], hit_mu_v, hit_sigma_v)
 hit_gauss_w = pdf(hit_hist_w[1][1:], hit_mu_w, hit_sigma_w)
-
-# Calculate normalization
-hit_gaussint_u = np.trapz(hit_gauss_u,hit_hist_u[1][1:])
-hit_gaussint_v = np.trapz(hit_gauss_v,hit_hist_v[1][1:])
-hit_gaussint_w = np.trapz(hit_gauss_w,hit_hist_w[1][1:])
-
 
 # Plot the data:
 plt.figure(figsize=(10,6), dpi=160)
