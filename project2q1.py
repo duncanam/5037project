@@ -566,73 +566,80 @@ hit_gauss_u = pdf(hit_hist_u[1][1:], hit_mu_u, hit_sigma_u)
 hit_gauss_v = pdf(hit_hist_v[1][1:], hit_mu_v, hit_sigma_v)
 hit_gauss_w = pdf(hit_hist_w[1][1:], hit_mu_w, hit_sigma_w)
 
+# Calculate normalization
+hit_gaussint_u = np.trapz(hit_gauss_u,hit_hist_u[1][1:])
+hit_gaussint_v = np.trapz(hit_gauss_v,hit_hist_v[1][1:])
+hit_gaussint_w = np.trapz(hit_gauss_w,hit_hist_w[1][1:])
+
+
 # Plot the data:
 plt.figure(figsize=(10,6), dpi=160)
 plt.suptitle('HST PDFs')
 legsize=6
 
 plt.subplot(331)
-plt.bar(hst_hist_32_u[1][1:], hst_hist_32_u[0],label='HST u j=32') 
-plt.plot(hst_hist_32_u[1][1:],hst_gauss_32_u, color='red')
+plt.plot(hst_hist_32_u[1][1:], hst_hist_32_u[0],label='HST u j=32') 
+plt.plot(hst_hist_32_u[1][1:],hst_gauss_32_u, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(332)
-plt.bar(hst_hist_32_v[1][1:], hst_hist_32_v[0],label='HST v j=32') 
-plt.plot(hst_hist_32_v[1][1:],hst_gauss_32_v, color='red')
+plt.plot(hst_hist_32_v[1][1:], hst_hist_32_v[0],label='HST v j=32') 
+plt.plot(hst_hist_32_v[1][1:],hst_gauss_32_v, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(333)
-plt.bar(hst_hist_32_w[1][1:], hst_hist_32_w[0],label='HST w j=32') 
-plt.plot(hst_hist_32_w[1][1:],hst_gauss_32_w, color='red')
+plt.plot(hst_hist_32_w[1][1:], hst_hist_32_w[0],label='HST w j=32') 
+plt.plot(hst_hist_32_w[1][1:],hst_gauss_32_w, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(334)
-plt.bar(hst_hist_64_u[1][1:], hst_hist_64_u[0],label='HST u j=64') 
-plt.plot(hst_hist_64_u[1][1:],hst_gauss_64_u, color='red')
+plt.plot(hst_hist_64_u[1][1:], hst_hist_64_u[0],label='HST u j=64') 
+plt.plot(hst_hist_64_u[1][1:],hst_gauss_64_u, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(335)
-plt.bar(hst_hist_64_v[1][1:], hst_hist_64_v[0],label='HST v j=64') 
-plt.plot(hst_hist_64_v[1][1:],hst_gauss_64_v, color='red')
+plt.plot(hst_hist_64_v[1][1:], hst_hist_64_v[0],label='HST v j=64') 
+plt.plot(hst_hist_64_v[1][1:],hst_gauss_64_v, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(336)
-plt.bar(hst_hist_64_w[1][1:], hst_hist_64_w[0],label='HST w j=64') 
-plt.plot(hst_hist_64_w[1][1:],hst_gauss_64_w, color='red')
+plt.plot(hst_hist_64_w[1][1:], hst_hist_64_w[0],label='HST w j=64') 
+plt.plot(hst_hist_64_w[1][1:],hst_gauss_64_w, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(337)
-plt.bar(hst_hist_96_u[1][1:], hst_hist_96_u[0],label='HST u j=96') 
-plt.plot(hst_hist_96_u[1][1:],hst_gauss_96_u, color='red')
+plt.plot(hst_hist_96_u[1][1:], hst_hist_96_u[0],label='HST u j=96') 
+plt.plot(hst_hist_96_u[1][1:],hst_gauss_96_u, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(338)
-plt.bar(hst_hist_96_v[1][1:], hst_hist_96_v[0],label='HST v j=96') 
-plt.plot(hst_hist_96_v[1][1:],hst_gauss_96_v, color='red')
+plt.plot(hst_hist_96_v[1][1:], hst_hist_96_v[0],label='HST v j=96') 
+plt.plot(hst_hist_96_v[1][1:],hst_gauss_96_v, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(339)
-plt.bar(hst_hist_96_w[1][1:], hst_hist_96_w[0],label='HST w j=96') 
-plt.plot(hst_hist_96_w[1][1:],hst_gauss_96_w, color='red')
+plt.plot(hst_hist_96_w[1][1:], hst_hist_96_w[0],label='HST w j=96') 
+plt.plot(hst_hist_96_w[1][1:],hst_gauss_96_w, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
+# HIT:
 plt.figure(figsize=(10,6), dpi=160)
 plt.suptitle('HIT PDFs')
 legsize=6
 
 plt.subplot(131)
-plt.bar(hit_hist_u[1][1:], hit_hist_u[0], label='HIT u')
-plt.plot(hit_hist_u[1][1:], hit_gauss_u, color='red')
+plt.plot(hit_hist_u[1][1:], hit_hist_u[0], label='HIT u')
+plt.plot(hit_hist_u[1][1:], hit_gauss_u, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(132)
-plt.bar(hit_hist_v[1][1:], hit_hist_v[0], label='HIT v')
-plt.plot(hit_hist_v[1][1:], hit_gauss_v, color='red')
+plt.plot(hit_hist_v[1][1:], hit_hist_v[0], label='HIT v')
+plt.plot(hit_hist_v[1][1:], hit_gauss_v, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(133)
-plt.bar(hit_hist_w[1][1:], hit_hist_w[0], label='HIT w')
-plt.plot(hit_hist_w[1][1:], hit_gauss_w, color='red')
+plt.plot(hit_hist_w[1][1:], hit_hist_w[0], label='HIT w')
+plt.plot(hit_hist_w[1][1:], hit_gauss_w, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 

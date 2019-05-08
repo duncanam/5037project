@@ -56,6 +56,12 @@ uvw = ['u','v','w']
  hst_u, hst_v, hst_w] = dataimport(filenames, nx)
 
 ######################################################################
+# CALCULATE Aij AND <Aij>xyz: [2.1]
+# Preallocate:
+A = np.ones(3,3,nx[0],nx[1],nx[2])
+for i in range(3):
+    for j in range(3):
+        A
 
 ######################################################################
 # PRINT LINE END
