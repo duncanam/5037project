@@ -1,11 +1,11 @@
 ######################################################################
-#        ____            _           _     ____
-#       |  _ \ _ __ ___ (_) ___  ___| |_  |___ \
-#       | |_) | '__/ _ \| |/ _ \/ __| __|   __) |
-#       |  __/| | | (_) | |  __/ (__| |_   / __/
-#       |_|   |_|  \___// |\___|\___|\__| |_____|
-#                     |__/
-#
+#    ____            _           _     ____   ___  _ 
+#   |  _ \ _ __ ___ (_) ___  ___| |_  |___ \ / _ \/ |
+#   | |_) | '__/ _ \| |/ _ \/ __| __|   __) | | | | |
+#   |  __/| | | (_) | |  __/ (__| |_   / __/| |_| | |
+#   |_|   |_|  \___// |\___|\___|\__| |_____|\__\_\_|
+#                 |__/                               
+#   
 # Purpose: Main script for ASEN 5037 Project 2
 #
 # Note: for best results, use an iPython interpreter. 
@@ -13,7 +13,7 @@
 # Author: Duncan McGough
 #
 # Date Created:     4/11/19
-# Date Edited:      5/2/19
+# Date Edited:      5/7/19
 #
 ######################################################################
 # IMPORT PACKAGES
@@ -449,7 +449,40 @@ plt.plot(np.arange(nx[1]), hit_uipuip_xyz[2,2]*np.ones(nx[1]), label='HIT w\'w\'
 plt.legend(prop={'size': legsize})
 
 ######################################################################
+# CALCULATE 2,3,4TH MOMENTS [1.9]
+# Allocate memory:
+hit_2m = np.zeros(3) 
+hit_sigma = np.zeros(3)
+hit_3m = np.zeros(3)
+hit_4m = np.zeros(3)
+hit_s = np.zeros(3)
+hit_k = np.zeros(3)
+hst_2m = np.zeros(3) 
+hst_sigma = np.zeros(3)
+hst_3m = np.zeros(3)
+hst_4m = np.zeros(3)
+hst_s = np.zeros(3)
+hst_k = np.zeros(3)
 
+for i in range(3):
+    # HIT moments (page 84 of text): 
+    hit_2m[i] = np.mean(hit_npf[i]**2)
+    hit_sigma[i] = np.sqrt(hit_2m[i])
+    hit_3m[i] = np.mean(hit_npf[i]**3)
+    hit_4m[i] = np.mean(hit_npf[i]**4)
+    hit_s = hit_3m/hit_sigma[i]**3
+    hit_k = hit_4m/hit_sigma[i]**4
+    
+    # HST moments: 
+    hst_2m[i] = np.mean(hst_np[i]**2)                             
+    hst_sigma[i] = np.sqrt(hst_2m[i])
+    hst_3m[i] = np.mean(hst_np[i]**3)
+    hst_4m[i] = np.mean(hst_np[i]**4)
+    hst_s = hst_3m/hst_sigma[i]**3
+    hst_k = hst_4m/hst_sigma[i]**4
+
+######################################################################
+# 
 
 ######################################################################
 # PRINT LINE END
@@ -459,5 +492,5 @@ print('\n')
 
 ######################################################################
 # SHOW FIGURES
-#plt.close('all')
-plt.show()
+plt.close('all')
+#plt.show()
