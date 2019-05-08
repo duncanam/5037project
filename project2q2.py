@@ -73,18 +73,19 @@ for i in range(3): # iterate u_i
     for j in range(3): # iterate x_i
         A[i,j,:,:,:] = np.gradient(hit_n[i], dx[j], axis=2-j)
         Abar[i,j] = np.mean(A[i,j,:,:,:])
-        Ap = A[i,j,:,:,:] - Abar[i,j] # for 2.2
+        Ap[i,j] = A[i,j,:,:,:] - Abar[i,j] # for 2.2
 
 print('<A>xyz = \n')
 print(Abar)
+print('\n')
 
 ######################################################################
 # FIND A' AND PLOT PDFs [2.2]
 # Ap = A' and found in section above. 
 
 # Reshape data:
-A11p_vec = np.reshape(A[0,0,:,:,:], (nx[0]*nx[1]*nx[2]))
-A12p_vec = np.reshape(A[0,1,:,:,:], (nx[0]*nx[1]*nx[2]))
+A11p_vec = np.reshape(Ap[0,0,:,:,:], (nx[0]*nx[1]*nx[2]))
+A12p_vec = np.reshape(Ap[0,1,:,:,:], (nx[0]*nx[1]*nx[2]))
 
 # Define bins: 
 nbins=100
@@ -123,6 +124,60 @@ plt.subplot(122)
 plt.plot(A12p_hist[1][1:], A12p_hist[0],label='A11') 
 plt.plot(A12p_hist[1][1:], A12p_g, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
+
+######################################################################
+# FIND SKEWNESS AND KURTOSIS OF A'11 [2.3]
+# Define for clarity:
+A11p = Ap[0,0,:,:,:]
+
+# Find skew and kurtosis:
+A11p_s = np.mean(A11p**3)/A11p_sigma**3
+A11p_k = np.mean(A11p**4)/A11p_sigma**4
+
+# print data:
+print('A\'11 S: \n')
+print(A11p_s)
+print('\n')
+print('A\'11 K: \n')
+print(A11p_k)
+print('\n')
+
+# Now do the same for the Gaussian data:
+# s=0 and k=3 for gaussian. 
+
+######################################################################
+# FLUCTUATING STRAIN RATE FIELD AND PSEUDO ENERGY DISSIPATION [2.4] 
+# Allocate:
+Sp = np.zeros((3,3,nx[0],nx[1],nx[2]))
+enu = np.zeros((nx[0],nx[1],nx[2]))
+
+for i in range(3):
+    for j in range(3):
+        # Calculate S'ij=0.5(A'ij+A'ji):
+        Sp[i,j,:,:,:] = 0.5*(Ap[i,j,:,:,:]+Ap[j,i,:,:,:])
+
+        # Pseudo energy dissipation field:
+        enu[:,:,:] = enu + 2*Sp[i,j,:,:,:]*Sp[i,j,:,:,:]
+
+# Now volume-averaged:
+enu_mean = np.mean(enu)
+
+# Print results:
+print('Volume-Averaged Epsilon/Nu: \n')
+print(enu_mean)
+print('\n')
+
+######################################################################
+# 2D X-Y PLOT OF  eps/<eps>xyz [2.5]
+# Colormap max and min:
+slcmin = np.min(enu)
+slcmax = np.max(enu)
+slcmap = 'jet'
+
+# Plot:
+plt.plot(figsize=(10,6), dpi=160)
+plt.title('HIT Epsilon/<Epsilon>_xyz at k=128')
+plt.imshow(enu[:,:,127]/enu_mean, vmin=slcmin, vmax=slcmax, cmap=slcmap)
 
 ######################################################################
 # PRINT LINE END
