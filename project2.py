@@ -509,13 +509,42 @@ hst_hist_96_u = np.histogram(hst_up_96_vec, bins=nbins, density=True)
 hst_hist_96_v = np.histogram(hst_vp_96_vec, bins=nbins, density=True)
 hst_hist_96_w = np.histogram(hst_wp_96_vec, bins=nbins, density=True)
 
+# Find means of all: 
+hst_mu_32_u = np.mean(hst_up_32_vec)
+hst_mu_32_v = np.mean(hst_vp_32_vec)
+hst_mu_32_w = np.mean(hst_wp_32_vec)
+hst_mu_64_u = np.mean(hst_up_64_vec)
+hst_mu_64_v = np.mean(hst_vp_64_vec)
+hst_mu_64_w = np.mean(hst_wp_64_vec)
+hst_mu_96_u = np.mean(hst_up_96_vec)
+hst_mu_96_v = np.mean(hst_vp_96_vec)
+hst_mu_96_w = np.mean(hst_wp_96_vec)
+
+# Find sigmas of all:
+hst_sigma_32_u = np.std(hst_up_32_vec)
+hst_sigma_32_v = np.std(hst_vp_32_vec)
+hst_sigma_32_w = np.std(hst_wp_32_vec)
+hst_sigma_64_u = np.std(hst_up_64_vec)
+hst_sigma_64_v = np.std(hst_vp_64_vec)
+hst_sigma_64_w = np.std(hst_wp_64_vec)
+hst_sigma_96_u = np.std(hst_up_96_vec)
+hst_sigma_96_v = np.std(hst_vp_96_vec)
+hst_sigma_96_w = np.std(hst_wp_96_vec)
+
+# Define Gaussian function:
+def pdf(x,mu,sigma):
+    return 1/np.sqrt(2*pi)*1/sigma*np.exp(-(x)**2/(2*sigma**2))
+
 # Get Gaussian profile
-mu = 0 
-hst_gauss_32_u = norm.pdf(hst_hist_32_u[1][1:], mu, hst_sigma[31])
-hst_gauss_32_v = norm.pdf(hst_hist_32_v[1][1:], mu, hst_sigma[31])
-hst_gauss_32_w = norm.pdf(hst_hist_32_w[1][1:], mu, hst_sigma[31])
-
-
+hst_gauss_32_u = pdf(hst_hist_32_u[1][1:], hst_mu_32_u, hst_sigma_32_u)
+hst_gauss_32_v = pdf(hst_hist_32_v[1][1:], hst_mu_32_v, hst_sigma_32_v)
+hst_gauss_32_w = pdf(hst_hist_32_w[1][1:], hst_mu_32_w, hst_sigma_32_w)
+hst_gauss_64_u = pdf(hst_hist_64_u[1][1:], hst_mu_64_u, hst_sigma_64_u)
+hst_gauss_64_v = pdf(hst_hist_64_v[1][1:], hst_mu_64_v, hst_sigma_64_v)
+hst_gauss_64_w = pdf(hst_hist_64_w[1][1:], hst_mu_64_w, hst_sigma_64_w)
+hst_gauss_96_u = pdf(hst_hist_96_u[1][1:], hst_mu_96_u, hst_sigma_96_u)
+hst_gauss_96_v = pdf(hst_hist_96_v[1][1:], hst_mu_96_v, hst_sigma_96_v)
+hst_gauss_96_w = pdf(hst_hist_96_w[1][1:], hst_mu_96_w, hst_sigma_96_w)
 
 # Plot the data:
 plt.figure(figsize=(10,6), dpi=160)
@@ -539,26 +568,32 @@ plt.legend(prop={'size': legsize})
 
 plt.subplot(334)
 plt.bar(hst_hist_64_u[1][1:], hst_hist_64_u[0],label='HST u j=64') 
+plt.plot(hst_hist_64_u[1][1:],hst_gauss_64_u, color='red')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(335)
 plt.bar(hst_hist_64_v[1][1:], hst_hist_64_v[0],label='HST v j=64') 
+plt.plot(hst_hist_64_v[1][1:],hst_gauss_64_v, color='red')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(336)
 plt.bar(hst_hist_64_w[1][1:], hst_hist_64_w[0],label='HST w j=64') 
+plt.plot(hst_hist_64_w[1][1:],hst_gauss_64_w, color='red')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(337)
 plt.bar(hst_hist_96_u[1][1:], hst_hist_96_u[0],label='HST u j=96') 
+plt.plot(hst_hist_96_u[1][1:],hst_gauss_96_u, color='red')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(338)
 plt.bar(hst_hist_96_v[1][1:], hst_hist_96_v[0],label='HST v j=96') 
+plt.plot(hst_hist_96_v[1][1:],hst_gauss_96_v, color='red')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(339)
 plt.bar(hst_hist_96_w[1][1:], hst_hist_96_w[0],label='HST w j=96') 
+plt.plot(hst_hist_96_w[1][1:],hst_gauss_96_w, color='red')
 plt.legend(prop={'size': legsize})
 
 
