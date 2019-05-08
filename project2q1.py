@@ -6,7 +6,7 @@
 #   |_|   |_|  \___// |\___|\___|\__| |_____|\__\_\_|
 #                 |__/                               
 #   
-# Purpose: Main script for ASEN 5037 Project 2
+# Purpose: Main script for ASEN 5037 Project 2 Question 1
 #
 # Note: for best results, use an iPython interpreter. 
 #
@@ -33,7 +33,7 @@ from importdata import dataimport
 # PRINT WELCOME MESSAGE
 print('\n'*100)
 print('-'*60)
-print('TURBULENCE PROJECT 2 SCRIPT')
+print('TURBULENCE PROJECT 2 Q1 SCRIPT')
 print('Author: Duncan McGough')
 print('-'*60)
 print('\n')
@@ -485,7 +485,7 @@ plt.legend(prop={'size': legsize})
 ######################################################################
 # PDFs OF THE DATA WITH GAUSSIAN OVERLAY [1.10]
 # Number of histogram bins:
-nbins = 50
+nbins = 100
 
 # Reshape data:
 hst_up_32_vec = np.reshape(hst_up[:,31,:],(nx[0]*nx[2]))
@@ -595,19 +595,6 @@ plt.subplot(339)
 plt.bar(hst_hist_96_w[1][1:], hst_hist_96_w[0],label='HST w j=96') 
 plt.plot(hst_hist_96_w[1][1:],hst_gauss_96_w, color='red')
 plt.legend(prop={'size': legsize})
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ######################################################################
 # PRINT LINE END
