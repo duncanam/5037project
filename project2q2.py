@@ -170,14 +170,37 @@ print('\n')
 ######################################################################
 # 2D X-Y PLOT OF  eps/<eps>xyz [2.5]
 # Colormap max and min:
-slcmin = np.min(enu)
-slcmax = np.max(enu)
+slcmin = np.min(enu[:,:,127])
+#slcmax = np.max(enu[:,:,127])
+slcmax = 10.0 # tweak for visuals 
 slcmap = 'jet'
 
 # Plot:
-plt.plot(figsize=(10,6), dpi=160)
+fig1=plt.figure(figsize=(6,6), dpi=160)
 plt.title('HIT Epsilon/<Epsilon>_xyz at k=128')
-plt.imshow(enu[:,:,127]/enu_mean, vmin=slcmin, vmax=slcmax, cmap=slcmap)
+im=plt.imshow(enu[:,:,127]/enu_mean, vmin=slcmin, vmax=slcmax, cmap=slcmap)
+cax = fig1.add_axes([0.85, 0.05, 0.05, 0.9])
+fig1.colorbar(im,cax=cax, orientation='vertical')
+
+
+######################################################################
+# FLUCTUATING VORTICITY FIELD AND ENSTROPHY [2.6]
+# Allocate memory:
+wp = np.zeros((nx[0],nx[1],nx[2]))
+
+# Alternating tensor function:
+def levicivita(a,b,c):
+    if ((a==1)&(b==2)&(c==3))|((a==2)&(b==3)&(c==1))|((a==3)&(b==1)&(c==2)):
+        return 1.0
+    elif ((a==1)&(b==3)&(c==2))|((a==2)&(b==1)&(c==3))|((a==3)&(b==2)&(c==1)):
+        return -1.0
+    else:
+        return 0.0
+
+# Calculate vorticity:
+#for j in range(3):
+#    for k in range(3):
+         
 
 ######################################################################
 # PRINT LINE END
@@ -187,5 +210,5 @@ print('\n')
 
 ######################################################################
 # SHOW FIGURES
-#plt.close('all')
-plt.show()
+plt.close('all')
+#plt.show()
