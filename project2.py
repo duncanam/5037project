@@ -510,7 +510,11 @@ hst_hist_96_v = np.histogram(hst_vp_96_vec, bins=nbins, density=True)
 hst_hist_96_w = np.histogram(hst_wp_96_vec, bins=nbins, density=True)
 
 # Get Gaussian profile
-hst_pdf_32_u = norm(np.mean(hst_up[:,31,:]), np.std(hst_up[:,31,:])).pdf(hst_up[:,31,:])
+mu = 0 
+hst_gauss_32_u = norm.pdf(hst_hist_32_u[1][1:], mu, hst_sigma[31])
+hst_gauss_32_v = norm.pdf(hst_hist_32_v[1][1:], mu, hst_sigma[31])
+hst_gauss_32_w = norm.pdf(hst_hist_32_w[1][1:], mu, hst_sigma[31])
+
 
 
 # Plot the data:
@@ -520,14 +524,17 @@ legsize=6
 
 plt.subplot(331)
 plt.bar(hst_hist_32_u[1][1:], hst_hist_32_u[0],label='HST u j=32') 
+plt.plot(hst_hist_32_u[1][1:],hst_gauss_32_u, color='red')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(332)
 plt.bar(hst_hist_32_v[1][1:], hst_hist_32_v[0],label='HST v j=32') 
+plt.plot(hst_hist_32_v[1][1:],hst_gauss_32_v, color='red')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(333)
 plt.bar(hst_hist_32_w[1][1:], hst_hist_32_w[0],label='HST w j=32') 
+plt.plot(hst_hist_32_w[1][1:],hst_gauss_32_w, color='red')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(334)
