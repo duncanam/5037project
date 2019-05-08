@@ -451,49 +451,66 @@ plt.legend(prop={'size': legsize})
 ######################################################################
 # CALCULATE 2,3,4TH MOMENTS [1.9]
 # Allocate memory:
-hit_2m =    np.zeros(3) 
-hit_sigma = np.zeros(3)
-hit_3m =    np.zeros(3)
-hit_4m =    np.zeros(3)
-hit_s =     np.zeros(3)
-hit_k =     np.zeros(3)
-hst_2m =    np.zeros((3,nx[1])) 
-hst_sigma = np.zeros((3,nx[1]))
-hst_3m =    np.zeros((3,nx[1]))
-hst_4m =    np.zeros((3,nx[1]))
-hst_s =     np.zeros((3,nx[1]))
-hst_k =     np.zeros((3,nx[1]))
+hit_2m =   0 
+hit_sigma =0 
+hit_3m =   0 
+hit_4m =   0 
+hit_s =    0 
+hit_k =    0 
+hst_2m =   0 
+hst_sigma =0 
+hst_3m =   0 
+hst_4m =   0 
+hst_s =    0 
+hst_k =    0 
 
-for i in range(3):
-    # HIT moments (page 84 of text): 
-    hit_2m[i] = np.mean(hit_npf[i]**2)
-    hit_sigma[i] = np.sqrt(hit_2m[i])
-    hit_3m[i] = np.mean(hit_npf[i]**3)
-    hit_4m[i] = np.mean(hit_npf[i]**4)
-    hit_s[i] = hit_3m[i]/hit_sigma[i]**3
-    hit_k[i] = hit_4m[i]/hit_sigma[i]**4
-    
-    # HST moments: 
-    hst_2m[i,:] = 1/(nx[0]*nx[2])*np.sum(hst_np[i]**2, axis=(0,2))                             
-    hst_sigma[i,:] = np.sqrt(hst_2m[i,:])
-    hst_3m[i,:] = 1/(nx[0]*nx[2])*np.sum(hst_np[i]**3, axis=(0,2))
-    hst_4m[i,:] = 1/(nx[0]*nx[2])*np.sum(hst_np[i]**4, axis=(0,2))
-    hst_s[i,:] = hst_3m[i,:]/hst_sigma[i,:]**3
-    hst_k[i,:] = hst_4m[i,:]/hst_sigma[i,:]**4
+# HIT moments (page 84 of text): 
+hit_2m = np.mean(hit_upf**2)
+hit_sigma = np.sqrt(hit_2m)
+hit_3m = np.mean(hit_upf**3)
+hit_4m = np.mean(hit_upf**4)
+hit_s = hit_3m/hit_sigma**3
+hit_k = hit_4m/hit_sigma**4
+
+# HST moments: 
+hst_2m = 1/(nx[0]*nx[2])*np.sum(hst_up**2, axis=(0,2))                             
+hst_sigma = np.sqrt(hst_2m)
+hst_3m = 1/(nx[0]*nx[2])*np.sum(hst_up**3, axis=(0,2))
+hst_4m = 1/(nx[0]*nx[2])*np.sum(hst_up**4, axis=(0,2))
+hst_s = hst_3m/hst_sigma**3
+hst_k = hst_4m/hst_sigma**4
 
 # Plot the data:
 plt.figure(figsize=(10,6), dpi=160)
-plt.suptitle('HST vs. HIT: skewness and kurtosis')
+plt.suptitle('HST vs. HIT: skewness and kurtosis for u')
+legsize = 6
 
 plt.subplot(121)
-plt.plot(np.arange(nx[1]), hst_s[0,:], label='HST S')
-plt.plot(np.arange(nx[1]), hit_s[0]*np.ones(nx[1], label='HIT S')
+plt.plot(np.arange(nx[1]), hst_s, label='HST S')
+plt.plot(np.arange(nx[1]), hit_s*np.ones(nx[1]), label='HIT S')
+plt.legend(prop={'size': legsize})
 
 plt.subplot(122)
-plt.plot(np.arange(nx[1]), hst_k[0,:])
+plt.plot(np.arange(nx[1]), hst_k, label='HST K')
+plt.plot(np.arange(nx[1]), hit_k*np.ones(nx[1]), label='HIT K')
+plt.legend(prop={'size': legsize})
 
 ######################################################################
-# 
+# PDFs OF THE DATA WITH GAUSSIAN OVERLAY [1.10]
+hst_hist_32_u = np.histogram(hst_up, bins=50)
+hst_hist_32_v = np.histogram(hst_vp, bins=50)
+hst_hist_32_w = np.histogram(hst_wp, bins=50)
+
+hst_hist_64_u = np.histogram(hst_up, bins=50)
+hst_hist_64_v = np.histogram(hst_vp, bins=50)
+hst_hist_64_w = np.histogram(hst_wp, bins=50)
+
+hst_hist_96_u = np.histogram(hst_up, bins=50)
+hst_hist_96_v = np.histogram(hst_vp, bins=50)
+hst_hist_96_w = np.histogram(hst_wp, bins=50)
+
+
+
 
 ######################################################################
 # PRINT LINE END
@@ -503,5 +520,5 @@ print('\n')
 
 ######################################################################
 # SHOW FIGURES
-#plt.close('all')
-plt.show()
+plt.close('all')
+#plt.show()
