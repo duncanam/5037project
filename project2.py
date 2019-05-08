@@ -21,6 +21,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 #import cProfile
 #from numba import jit
+from scipy.stats import norm
 import sys
 sys.path.insert(0, './generic/') # path to generic functions
 
@@ -450,20 +451,6 @@ plt.legend(prop={'size': legsize})
 
 ######################################################################
 # CALCULATE 2,3,4TH MOMENTS [1.9]
-# Allocate memory:
-hit_2m =   0 
-hit_sigma =0 
-hit_3m =   0 
-hit_4m =   0 
-hit_s =    0 
-hit_k =    0 
-hst_2m =   0 
-hst_sigma =0 
-hst_3m =   0 
-hst_4m =   0 
-hst_s =    0 
-hst_k =    0 
-
 # HIT moments (page 84 of text): 
 hit_2m = np.mean(hit_upf**2)
 hit_sigma = np.sqrt(hit_2m)
@@ -497,17 +484,85 @@ plt.legend(prop={'size': legsize})
 
 ######################################################################
 # PDFs OF THE DATA WITH GAUSSIAN OVERLAY [1.10]
-hst_hist_32_u = np.histogram(hst_up, bins=50)
-hst_hist_32_v = np.histogram(hst_vp, bins=50)
-hst_hist_32_w = np.histogram(hst_wp, bins=50)
+# Number of histogram bins:
+nbins = 50
 
-hst_hist_64_u = np.histogram(hst_up, bins=50)
-hst_hist_64_v = np.histogram(hst_vp, bins=50)
-hst_hist_64_w = np.histogram(hst_wp, bins=50)
+# Reshape data:
+hst_up_32_vec = np.reshape(hst_up[:,31,:],(nx[0]*nx[2]))
+hst_vp_32_vec = np.reshape(hst_vp[:,31,:],(nx[0]*nx[2]))
+hst_wp_32_vec = np.reshape(hst_wp[:,31,:],(nx[0]*nx[2]))
+hst_up_64_vec = np.reshape(hst_up[:,63,:],(nx[0]*nx[2]))
+hst_vp_64_vec = np.reshape(hst_vp[:,63,:],(nx[0]*nx[2]))
+hst_wp_64_vec = np.reshape(hst_wp[:,63,:],(nx[0]*nx[2]))
+hst_up_96_vec = np.reshape(hst_up[:,95,:],(nx[0]*nx[2]))
+hst_vp_96_vec = np.reshape(hst_vp[:,95,:],(nx[0]*nx[2]))
+hst_wp_96_vec = np.reshape(hst_wp[:,95,:],(nx[0]*nx[2])) 
 
-hst_hist_96_u = np.histogram(hst_up, bins=50)
-hst_hist_96_v = np.histogram(hst_vp, bins=50)
-hst_hist_96_w = np.histogram(hst_wp, bins=50)
+# Create a histogram of this data:
+hst_hist_32_u = np.histogram(hst_up_32_vec, bins=nbins, density=True)
+hst_hist_32_v = np.histogram(hst_vp_32_vec, bins=nbins, density=True)
+hst_hist_32_w = np.histogram(hst_wp_32_vec, bins=nbins, density=True)
+hst_hist_64_u = np.histogram(hst_up_64_vec, bins=nbins, density=True)
+hst_hist_64_v = np.histogram(hst_vp_64_vec, bins=nbins, density=True)
+hst_hist_64_w = np.histogram(hst_wp_64_vec, bins=nbins, density=True)
+hst_hist_96_u = np.histogram(hst_up_96_vec, bins=nbins, density=True)
+hst_hist_96_v = np.histogram(hst_vp_96_vec, bins=nbins, density=True)
+hst_hist_96_w = np.histogram(hst_wp_96_vec, bins=nbins, density=True)
+
+# Get Gaussian profile
+hst_pdf_32_u = norm(np.mean(hst_up[:,31,:]), np.std(hst_up[:,31,:])).pdf(hst_up[:,31,:])
+
+
+# Plot the data:
+plt.figure(figsize=(10,6), dpi=160)
+plt.suptitle('HST PDFs')
+legsize=6
+
+plt.subplot(331)
+plt.bar(hst_hist_32_u[1][1:], hst_hist_32_u[0],label='HST u j=32') 
+plt.legend(prop={'size': legsize})
+
+plt.subplot(332)
+plt.bar(hst_hist_32_v[1][1:], hst_hist_32_v[0],label='HST v j=32') 
+plt.legend(prop={'size': legsize})
+
+plt.subplot(333)
+plt.bar(hst_hist_32_w[1][1:], hst_hist_32_w[0],label='HST w j=32') 
+plt.legend(prop={'size': legsize})
+
+plt.subplot(334)
+plt.bar(hst_hist_64_u[1][1:], hst_hist_64_u[0],label='HST u j=64') 
+plt.legend(prop={'size': legsize})
+
+plt.subplot(335)
+plt.bar(hst_hist_64_v[1][1:], hst_hist_64_v[0],label='HST v j=64') 
+plt.legend(prop={'size': legsize})
+
+plt.subplot(336)
+plt.bar(hst_hist_64_w[1][1:], hst_hist_64_w[0],label='HST w j=64') 
+plt.legend(prop={'size': legsize})
+
+plt.subplot(337)
+plt.bar(hst_hist_96_u[1][1:], hst_hist_96_u[0],label='HST u j=96') 
+plt.legend(prop={'size': legsize})
+
+plt.subplot(338)
+plt.bar(hst_hist_96_v[1][1:], hst_hist_96_v[0],label='HST v j=96') 
+plt.legend(prop={'size': legsize})
+
+plt.subplot(339)
+plt.bar(hst_hist_96_w[1][1:], hst_hist_96_w[0],label='HST w j=96') 
+plt.legend(prop={'size': legsize})
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -520,5 +575,5 @@ print('\n')
 
 ######################################################################
 # SHOW FIGURES
-plt.close('all')
-#plt.show()
+#plt.close('all')
+plt.show()
