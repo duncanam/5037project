@@ -170,9 +170,8 @@ print('\n')
 ######################################################################
 # 2D X-Y PLOT OF  eps/<eps>xyz [2.5]
 # Colormap max and min:
-slcmin = np.min(enu[:,:,127])
-#slcmax = np.max(enu[:,:,127])
-slcmax = 10.0 # tweak for visuals 
+slcmin = np.min(enu[:,:,127]/enu_mean)
+slcmax = np.max(enu[:,:,127]/enu_mean)
 slcmap = 'jet'
 
 # Plot:
@@ -186,7 +185,7 @@ fig1.colorbar(im,cax=cax, orientation='vertical')
 ######################################################################
 # FLUCTUATING VORTICITY FIELD AND ENSTROPHY [2.6]
 # Allocate memory:
-wp = np.zeros((nx[0],nx[1],nx[2]))
+wp = np.zeros((3,nx[0],nx[1],nx[2]))
 
 # Alternating tensor function:
 def levicivita(a,b,c):
@@ -198,9 +197,69 @@ def levicivita(a,b,c):
         return 0.0
 
 # Calculate vorticity:
-#for j in range(3):
-#    for k in range(3):
-         
+for i in range(3): # free index
+    for j in range(3): # summation
+        for k in range(3): # summation
+            wp[i,:,:,:] = wp[i,:,:,:] + levicivita(i,j,k) + Ap[k,j,:,:,:]
+
+# Allocate memory:
+omega = np.zeros((nx[0],nx[1],nx[2]))
+
+# Now calculate the enstropy field:
+for i in range(3):
+    omega[:,:,:] = omega + 0.5*wp[i,:,:,:]*wp[i,:,:,:]
+
+# Find the mean:
+omega_mean = np.mean(omega)
+
+# Print result:
+print('<Omega>xyz: \n')
+print(omega_mean)
+print('\n')
+
+######################################################################
+# 2D PLOT OF NORMALIZED ENSTROPHY [2.8]
+# Colormap max and min:
+slcmin = np.min(omega[:,:,127]/omega_mean)
+slcmax = np.max(omega[:,:,127]/omega_mean)
+slcmap = 'jet'
+
+# Plot:
+fig2=plt.figure(figsize=(6,6), dpi=160)
+plt.title('HIT Omega/<Omega>_xyz at k=128')
+im=plt.imshow(omega[:,:,127]/omega_mean, vmin=slcmin, vmax=slcmax, cmap=slcmap)
+cax = fig2.add_axes([0.85, 0.05, 0.05, 0.9])
+fig2.colorbar(im,cax=cax, orientation='vertical')
+
+######################################################################
+# CALCULATE PDFS OF THE TWO PREVIOUS QUANTITIES [2.9]
+# Create histograms:
+nbins = 100
+obar_o_hist = np.histogram(omega/omega_mean, bins=nbins, density=True)
+ebar_e_hist = np.histogram(enu/enu_mean, bins=nbins, density=True)
+
+# Find means:
+obar_o_mean = np.mean(omega/omega_mean)
+ebar_e_mean = np.mean(enu/enu_mean)
+
+# Find standard deviation:
+
+# Plot the data:
+plt.figure(figsize=(10,6), dpi=160)
+plt.suptitle('HIT Normalized Psuedo Energy Dissipation and Enstrophy PDFs')
+legsize=6
+
+plt.subplot(121)
+plt.plot(obar_o_hist[1][1:], obar_o_hist[0],label='omega/<omega>xyz') 
+#plt.plot(A11p_hist[1][1:], A11p_g, color='red',label='Gaussian')
+plt.legend(prop={'size': legsize})
+
+plt.subplot(122)
+plt.plot(ebar_e_hist[1][1:], ebar_e_hist[0],label='e/<e>xyz') 
+#plt.plot(A12p_hist[1][1:], A12p_g, color='red',label='Gaussian')
+plt.legend(prop={'size': legsize})
+
+
 
 ######################################################################
 # PRINT LINE END
@@ -210,5 +269,5 @@ print('\n')
 
 ######################################################################
 # SHOW FIGURES
-plt.close('all')
-#plt.show()
+#plt.close('all')
+plt.show()

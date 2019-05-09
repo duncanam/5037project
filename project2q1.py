@@ -22,6 +22,8 @@ import matplotlib.pyplot as plt
 #import cProfile
 #from numba import jit
 from scipy.stats import norm
+from mpl_toolkits.mplot3d import Axes3D
+from skimage.measure import marching_cubes_lewiner as mcl
 import sys
 sys.path.insert(0, './generic/') # path to generic functions
 
@@ -132,7 +134,7 @@ slcmax = np.max([max_hit_u, max_hit_v, max_hit_w, max_hst_u,
                 max_hst_v, max_hst_w])
                                                                                 
 slccmap = 'jet' # set the colormap 
-fsize = 8 # fontsize
+fsize = 4 # fontsize
 tsize = 6 # ticksize
 
 ## Define the subplot figure:
@@ -164,7 +166,7 @@ im = hitaxs[2,2].imshow(hit_w[:,:,255], vmin=slcmin, vmax=slcmax, cmap=slccmap)
 hitaxs[2,2].set_title('HIT w @ k=256',fontsize=fsize)
                                                                                 
 # Set the colorbar:
-cax = hitslc.add_axes([0.03, 0.03, 0.93, 0.02])
+cax = hitslc.add_axes([0.03, 0.04, 0.93, 0.02])
 hitslc.colorbar(im,cax=cax, orientation='horizontal')
 
 # Define the subplot figure:
@@ -196,7 +198,7 @@ hstaxs[2,2].imshow(hst_w[:,:,255], vmin=slcmin, vmax=slcmax, cmap=slccmap)
 hstaxs[2,2].set_title('HST w @ k=256',fontsize=fsize)
 
 # Set the colorbar:
-cax = hstslc.add_axes([0.03, 0.03, 0.93, 0.02])
+cax = hstslc.add_axes([0.03, 0.04, 0.93, 0.02])
 hstslc.colorbar(im,cax=cax, orientation='horizontal')
                                                                                 
 # Set tick font size for all:
@@ -256,7 +258,7 @@ for j in range(nx[1]):
 
 # Set some imshow settings:
 slccmap = 'jet' # set the colormap 
-fsize = 8 # fontsize
+fsize = 4 # fontsize
 tsize = 6 # ticksize
 
 # Find the min and max of these values:
@@ -300,7 +302,7 @@ hstpaxs[2,2].set_title('HST w\' @ k=256',fontsize=fsize)
 
 # Set the colorbar:
 #cax = hstpslc.add_axes([0.85, 0.05, 0.01, 0.9])
-cax = hstpslc.add_axes([0.03, 0.03, 0.93, 0.02])
+cax = hstpslc.add_axes([0.03, 0.04, 0.93, 0.02])
 hstpslc.colorbar(im,cax=cax, orientation='horizontal')
 
 for i in range(3):
@@ -323,7 +325,7 @@ hit_wpf = hit_w - hit_w_xyz
 
 # Set some imshow settings:
 slccmap = 'jet' # set the colormap 
-fsize = 8 # fontsize
+fsize = 4 # fontsize
 tsize = 6 # ticksize
 
 # Find the min and max of these values:
@@ -367,7 +369,7 @@ hitpaxs[2,2].set_title('HIT w\' @ k=256',fontsize=fsize)
 
 # Set the colorbar:
 #cax = hitpslc.add_axes([0.85, 0.05, 0.01, 0.9])
-cax = hitpslc.add_axes([0.03, 0.03, 0.93, 0.02])
+cax = hitpslc.add_axes([0.03, 0.04, 0.93, 0.02])
 hitpslc.colorbar(im,cax=cax, orientation='horizontal')
 
 for i in range(3):
