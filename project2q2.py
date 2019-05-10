@@ -238,12 +238,6 @@ nbins = 100
 obar_o_hist = np.histogram(omega/omega_mean, bins=nbins, density=True)
 ebar_e_hist = np.histogram(enu/enu_mean, bins=nbins, density=True)
 
-# Find means:
-obar_o_mean = np.mean(omega/omega_mean)
-ebar_e_mean = np.mean(enu/enu_mean)
-
-# Find standard deviation:
-
 # Plot the data:
 plt.figure(figsize=(10,6), dpi=160)
 plt.suptitle('HIT Normalized Psuedo Energy Dissipation and Enstrophy PDFs')
@@ -251,15 +245,11 @@ legsize=6
 
 plt.subplot(121)
 plt.plot(obar_o_hist[1][1:], obar_o_hist[0],label='omega/<omega>xyz') 
-#plt.plot(A11p_hist[1][1:], A11p_g, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(122)
 plt.plot(ebar_e_hist[1][1:], ebar_e_hist[0],label='e/<e>xyz') 
-#plt.plot(A12p_hist[1][1:], A12p_g, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
-
-
 
 ######################################################################
 # PRINT LINE END
@@ -269,5 +259,5 @@ print('\n')
 
 ######################################################################
 # SHOW FIGURES
-#plt.close('all')
-plt.show()
+plt.close('all')
+#plt.show()
