@@ -21,9 +21,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 #import cProfile
 #from numba import jit
-from scipy.stats import norm
-from mpl_toolkits.mplot3d import Axes3D
-from skimage.measure import marching_cubes_lewiner as mcl
+#from scipy.stats import norm
+#from mpl_toolkits.mplot3d import Axes3D
+#from skimage.measure import marching_cubes_lewiner as mcl
 import sys
 sys.path.insert(0, './generic/') # path to generic functions
 
@@ -62,13 +62,60 @@ uvw = ['u','v','w']
 #   AND SPATIAL TAYLOR SCALE [3.1]
 # Define autocorrelation function: 
 def rho(r,up):
-    up_temp1 = up[r:,:,:]
-    up_temp2 = up[0:r,:,:]
-    return np.mean(up*up[r:,:,:])/np.mean(up**2)
+    # Make a u' array that is wrapped based on r:
+    up_p1 = np.concatenate((up[r:,:,:],up[0:r,:,:]))
+    # Return the autocorrelation:
+    return np.mean(up*up_p1)/np.mean(up**2)
 
 # Load the HIT u' data from Question 1:
-hit_p = np.load('hit_p.npy')
+hit_p = np.load('hit_up.npy')
+
+# Housekeeping for next step:
+inf = nx[0] # define infinity
+r_inf = np.arange(inf) # Define vector
+rho_i = np.zeros((inf)) # allocate memory 
+
+# Now loop through infinity:
+for i in range(inf):
+    # Store rho() in vector for numeric integration:
+    rho_i[i] = rho(i,hit_p) 
+
+# Calculate the spatial integral scale:
+llam = np.trapz(rho_i,r_inf)
+
+# Calculate and evaluate derivatives of rho:
+d2pdr2_0 = np.gradient(np.gradient(rho_i))[0]
+
+# Calculate the spatial taylor scale:
+lam2 = -2*d2pdr2_0**(-1)
+
+# Print results:
+print('Spatial Integral Scale: \n')
+print(llam)
+print('\n')
+
+print('Spatial Taylor Scale: \n')
+print(lam2)
+print('\n')
+
+# Plot results:
+plt.figure(figsize=(8,6), dpi=160)
+plt.plot(r_inf,rho_i,label='HIT u\' Autocorrelation')
+plt.plot(r_inf, np.exp(-r_inf/llam),label='Exponential')
+plt.plot(r_inf, np.exp(-(np.pi/4)*(r_inf/llam)**2),label='Gaussian')
+plt.legend()
+
+######################################################################
+# JOINT PDFS [3.2]
 
 
+######################################################################
+# PRINT LINE END
+print('\n')
+print('-'*60)
+print('\n')
 
-
+######################################################################
+# SHOW FIGURES
+#plt.close('all')
+plt.show()

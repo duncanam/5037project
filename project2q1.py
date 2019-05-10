@@ -323,15 +323,7 @@ hit_upf = hit_u - hit_u_xyz
 hit_vpf = hit_v - hit_v_xyz
 hit_wpf = hit_w - hit_w_xyz
 
-# Allocate memory:
-hit_p = np.zeros((3,nx[0],nx[1],nx[2]))
-
-# Store data for problem 3
-hit_p[0,:,:,:] = hit_upf
-hit_p[1,:,:,:] = hit_vpf
-hit_p[2,:,:,:] = hit_wpf
-
-np.save('hit_p',hit_p)
+np.save('hit_up',hit_upf)
 
 # Set some imshow settings:
 slccmap = 'jet' # set the colormap 
