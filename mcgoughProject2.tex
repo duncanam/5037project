@@ -10,6 +10,7 @@
 \usepackage{url}
 \usepackage{subcaption}
 \usepackage{listings}
+\usepackage{pythonhighlight}
 
 \title{MCEN 7221/ASEN 5027 Turbulence Project 2}
 \author{Duncan McGough}
@@ -18,6 +19,7 @@
 \begin{document}
 \maketitle
 
+This project can be found at: \url{https://github.com/duncanam/5037project}
 \tableofcontents
 \listoffigures
 \newpage
@@ -287,6 +289,7 @@ The PDFs of the normalized pseudo energy dissipation rate and enstrophy can be p
 \end{figure}
 
 \section{Problem 3}
+\subsection{Autocorrelation and Scales}
 For HIT, the autocorrelation of $u'$ is
 \[
 \rho(r) = \frac{\langle u'(x,y,z)u'(x+r,y,z)\rangle_{xyz}}{\langle(u')^2\rangle_{xyz}}.
@@ -307,9 +310,9 @@ When the HIT data is considered, it results in:
 \[
 \lambda^2 = 675.9795656051165
 \]
-The resulting autocorrelation $\rho(r)$ is compared with exponential and Gaussian forms in Figure \ref{fig:31}.
+The resulting autocorrelation $\rho(r)$ is compared with exponential and Gaussian forms in Figure \ref{fig:31}. Looking at this figure, the Reynolds number can be assumed to be large since the autocorrelation fluctuates so much. Since the autocorrelation describes how well a quantity is correlated with itself, large values and fluctuations in values indicate that the fluctuating velocity here is not correlated well with itself and is changing frequently, indicating high Reynolds number turbulent flow.
 
-\begin{figure}[H]
+\begin{figure}
 	\centering
 	\includegraphics[ width=\linewidth]{./figures/31.png}
 	\caption{Autocorrelation Comparison}
@@ -317,17 +320,45 @@ The resulting autocorrelation $\rho(r)$ is compared with exponential and Gaussia
 \end{figure}
 
 
+\subsection{Joint PDF}
+The joint PDF of the normalized pseudo energy dissipation rate and enstrophy field can be calculated using:
+\[
+I(\varepsilon/\langle\varepsilon\rangle_{xyz},\Omega/\langle\Omega\rangle_{xyz})=\frac{\beta(\Omega/\langle\Omega\rangle_{xyz},\varepsilon/\langle\varepsilon\rangle_{xyz})}{\beta(\varepsilon/\langle\varepsilon\rangle_{xyz})\beta(\Omega/\langle\Omega\rangle_{xyz})}
+\]
+When this is calculated and plotted, it results in Figure \ref{fig:32}. Around the (0,0) coordinate, the PDF is at it's peak. This sharply falls off and backs down. This means that at both small values of energy dissipation and enstrophy the quantities are well correlated. In relation to the Burger's vortex, the vorticity is concentrated in a column, so here one can see that the correlation is also extremely concentrated in one region. 
+
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/32.png}
+	\caption{Joint PDF of Normalized Pseudo Energy Dissipation Rate and Enstrophy Field }
+	\label{fig:32}
+\end{figure}
+
+\subsection{Agreement with Kolmogorov}
+The kinetic energy spectrum is described by
+\[
+E(k)=k^3\frac{d}{dk}\left( \frac{1}{k}\frac{d}{dk}E_f(k) \right).
+\]
+Since the turbulence is homogeneous and isotropic and our previous calculated autocorrelation and PDFs have been consistent with HIT assumptions, we can say that the data agrees with Kolmogorov scaling. 
 
 
+\begin{appendix}
+\newpage
+\section{Code: Problem 1}
+\inputpython{project2q1.py}{0}{10000}
 
+\section{Code: Problem 2}
+\inputpython{project2q2.py}{0}{10000}
 
+\section{Code: Problem 3}
+\inputpython{project2q3.py}{0}{10000}
 
+\end{appendix}
+\section{Code: Import Data}
+\inputpython{./generic/importdata.py}{0}{10000}
 
-
-
-
-
-
+\section{Code: Read Data}
+\inputpython{./generic/read_data.py}{0}{10000}
 
 
 

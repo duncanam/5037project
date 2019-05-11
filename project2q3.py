@@ -35,7 +35,7 @@ from importdata import dataimport
 # PRINT WELCOME MESSAGE
 print('\n'*100)
 print('-'*60)
-print('TURBULENCE PROJECT 2 Q1 SCRIPT')
+print('TURBULENCE PROJECT 2 Q3 SCRIPT')
 print('Author: Duncan McGough')
 print('-'*60)
 print('\n')
@@ -121,6 +121,19 @@ eo_hist, ebar_edge, obar_edge = np.histogram2d(np.reshape(ebar_e,(nx[0]*nx[1]*nx
 
 # Combine into joint histogram:
 joint_hist = eo_hist/np.max(eo_hist)
+
+# Define colormap
+slcmap = 'jet'
+slcmax = np.max(joint_hist)
+slcmin = np.min(joint_hist)
+
+# Plot
+fig = plt.figure(figsize=(8,6), dpi=160)
+im=plt.imshow(joint_hist, vmin=slcmin, vmax=slcmax, cmap=slcmap) 
+plt.title('Joint PDF of Normalized Energy Dissipation and Enstrophy')
+cax = fig.add_axes([0.85, 0.05, 0.05, 0.9])
+fig.colorbar(im,cax=cax, orientation='vertical')
+
 
 ######################################################################
 # PRINT LINE END
