@@ -207,18 +207,50 @@ can be computed and the PDFs of the components $A'_{11}$ and $A'_{12}$ are plott
 The two PDFs are fairly different in shape. $A'_{12}$ has significantly more kurtosis than $A'_{11}$. $A'_{11}$ has similar shape to Gaussian, with close agreement towards the tails and rising edges. $A'_{12}$ also agrees with Gaussian near the tails and rising edges but drastically overshoots the peak. One can see a similarity to the full volume HIT PDFs in Figure \ref{fig:110-hit} for the v-component in velocity and $A'_{12}$ with the strong central peak. The slight stair-step near the peak seen in the w-component velocity HIT PDF lingers in the $A'_{11}$ PDF. 
 
 \subsection{$A'_{11}$ Skewness and Kurtosis}
+The skewness and kurtosis for $A'_{11}$ can be computed with:
+\[
+S = \frac{\langle A'_{11}\rangle_{xyz}^3}{\sigma^3}
+\]
+and 
+\[
+K = \frac{\langle A'_{11}\rangle_{xyz}^4}{\sigma^4}.
+\]
+When this is done to the HIT data, it results in:
+\[
+A'_{11}~S = -0.3915937503182623
+\]
+\[
+A'_{11}~K = 3.560396769244712
+\]
+These values can be compared to a Gaussian PDF, which has a skewness of 0 and a kurtosis of 3. This means that $A'_{11}$ is fairly close to being Gaussian, but not perfect. This is confirmed by Figure \ref{fig:22}, where it can be seen that the plot is slightly skewed to the right and slightly taller than Gaussian. 
 
+This can be extrapolated to form the basis that turbulent flows can be modeled approximately with Gaussian distributions. This is not a perfect approximation as seen in this example, but often it is ``close enough". 
 
+\subsection{Fluctuating Strain Rate and Pseudo Energy Dissipation}
+The fluctuating strain rate is defined as 
+\[
+S'_{ij}(x,y,z) = \frac{1}{2}\left[ A'_{ij}(x,y,z)+A'_{ji}(x,y,z) \right],
+\]
+and is defined everywhere inside the volume. This can be calculated and used to define the pseudo energy dissipation rate 
+\[
+\frac{\varepsilon}{\nu}=2S'_{ij}S'_{ij}.
+\]
+Notice that the repeated indices here indicate summation. This leads to the calculation of the time-averaged value of this quantity, which is denoted as $\frac{\langle \varepsilon\rangle_{xyz}}{\varepsilon}$. For the HIT data, this is:
+\[
+\frac{\langle \varepsilon\rangle_{xyz}}{\varepsilon} = 2.861789663199326
+\]
 
+\subsection{2D $\frac{\langle \varepsilon\rangle_{xyz}}{\varepsilon}$ Plot}
+$\frac{\langle \varepsilon\rangle_{xyz}}{\varepsilon}$ can be sliced and plotted using the slice index $k=128.$ The result is seen in Figure \ref{fig:25}. Comparing to Figure \ref{fig:17}, it is noticed that some areas of low velocity are high-intensity regions of the pseudo energy dissipation rate field. Some structures are seen in both fields, but some are not. 
+\begin{figure}
+	\centering
+	\includegraphics[ width=0.8\linewidth]{./figures/25.png}
+	\caption{$\frac{\langle \varepsilon\rangle_{xyz}}{\varepsilon}$ Plotted at $k=128$}
+	\label{fig:25}
+\end{figure}
 
-
-
-
-
-
-
-
-
+\subsection{Fluctuating Vorticity and Enstrophy} 
+The fluctuating vorticity is calculated using 
 
 
 
