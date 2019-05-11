@@ -464,7 +464,7 @@ hit_s = hit_3m/hit_sigma**3
 hit_k = hit_4m/hit_sigma**4
 
 # HST moments: 
-hst_2m = 1/(nx[0]*nx[2])*np.sum(hst_up**2, axis=(0,2))                             
+hst_2m = 1/(nx[0]*nx[2])*np.sum(hst_up**2, axis=(0,2))
 hst_sigma = np.sqrt(hst_2m)
 hst_3m = 1/(nx[0]*nx[2])*np.sum(hst_up**3, axis=(0,2))
 hst_4m = 1/(nx[0]*nx[2])*np.sum(hst_up**4, axis=(0,2))

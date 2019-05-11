@@ -121,7 +121,7 @@ plt.plot(A11p_hist[1][1:], A11p_g, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
 plt.subplot(122)
-plt.plot(A12p_hist[1][1:], A12p_hist[0],label='A11') 
+plt.plot(A12p_hist[1][1:], A12p_hist[0],label='A12') 
 plt.plot(A12p_hist[1][1:], A12p_g, color='red',label='Gaussian')
 plt.legend(prop={'size': legsize})
 
@@ -205,7 +205,7 @@ for i in range(3): # free index
 # Allocate memory:
 omega = np.zeros((nx[0],nx[1],nx[2]))
 
-# Now calculate the enstropy field:
+# Now calculate the enstrophy field:
 for i in range(3):
     omega[:,:,:] = omega + 0.5*wp[i,:,:,:]*wp[i,:,:,:]
 
@@ -238,6 +238,12 @@ nbins = 100
 obar_o_hist = np.histogram(omega/omega_mean, bins=nbins, density=True)
 ebar_e_hist = np.histogram(enu/enu_mean, bins=nbins, density=True)
 
+# Save data:
+np.save('obar_o_hist',obar_o_hist)
+np.save('ebar_e_hist',ebar_e_hist)
+np.save('obar_o', omega/omega_mean)
+np.save('ebar_e', enu/enu_mean)
+
 # Plot the data:
 plt.figure(figsize=(10,6), dpi=160)
 plt.suptitle('HIT Normalized Psuedo Energy Dissipation and Enstrophy PDFs')
@@ -259,5 +265,5 @@ print('\n')
 
 ######################################################################
 # SHOW FIGURES
-plt.close('all')
-#plt.show()
+#plt.close('all')
+plt.show()

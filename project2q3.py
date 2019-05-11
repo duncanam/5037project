@@ -107,7 +107,20 @@ plt.legend()
 
 ######################################################################
 # JOINT PDFS [3.2]
+# Load data:
+ebar_e_hist = np.load('ebar_e_hist.npy', allow_pickle=True)
+obar_o_hist = np.load('obar_o_hist.npy', allow_pickle=True)
+ebar_e = np.load('ebar_e.npy', allow_pickle=True)
+obar_o = np.load('obar_o.npy', allow_pickle=True)
 
+# Define bins
+nbins = 100
+
+# Make histogram for numerator:
+eo_hist, ebar_edge, obar_edge = np.histogram2d(np.reshape(ebar_e,(nx[0]*nx[1]*nx[2])), np.reshape(obar_o,(nx[0]*nx[1]*nx[2])), bins=nbins)
+
+# Combine into joint histogram:
+joint_hist = eo_hist/np.max(eo_hist)
 
 ######################################################################
 # PRINT LINE END
