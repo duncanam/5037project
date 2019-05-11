@@ -251,19 +251,70 @@ $\frac{\langle \varepsilon\rangle_{xyz}}{\varepsilon}$ can be sliced and plotted
 
 \subsection{Fluctuating Vorticity and Enstrophy} 
 The fluctuating vorticity is calculated using 
+\[
+\omega'_i = (x,y,z)=\varepsilon_{ijk}A'_{kj},
+\]
+where $\varepsilon_{ijk}$ is the Levi-Civita or alternating tensor. The enstrophy can be calculated from this using 
+\[
+\Omega = \frac{1}{2}\omega'_i\omega'_i. 
+\]
+When this quantity is time-averaged across the entire domain, the HIT data gives a result of:
+\[
+\langle\Omega\rangle_{xyz} = 2.1634319241507
+\]
 
+\subsection{Relationships}
+It appears that $\varepsilon\sim\Omega^2$. This can be seen in Hamlington and Dahm Figure 4.32. The value found for enstrophy in this problem does not agree with this relation. This could be due to numerical and calculation error.
 
+\subsection{Normalized Enstrophy Plot}
+Enstrophy is normalized as $\frac{\Omega}{\langle \Omega\rangle_{xyz}}$ and plotted at the $k=128$ plane. This is seen in Figure \ref{fig:28}. When compared to Figure{fig:17}, some similar structure can be seen, with a small spot of negative velocity contributing to the enstrophy. It is also noted that other isolated regions have increased enstrophy. Compared to Figure \ref{fig:25}, two dominant high-enstrophy structures remain in the middle near the top and near the bottom third between the two plots. Generic structure also remains. 
 
+\begin{figure}
+	\centering
+	\includegraphics[ width=0.8\linewidth]{./figures/28.png}
+	\caption{Enstrophy 2D Slice at $k=128$}
+	\label{fig:28}
+\end{figure}
 
+\subsection{PDFs}
+The PDFs of the normalized pseudo energy dissipation rate and enstrophy can be plotted for the entire domain. These are seen in Figure \ref{fig:29}. The PDFs are both log-normal and fairly small due to the increased multiplicative nature of the quantities that generated them. The profiles are similar, and one can see the similarity between the dissipation and enstrophy fields that were plotted in previous sections. The slightly increased span of the enstrophy PDF may indicate the increased number of distinct structures in the enstrophy field. 
 
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/29.png}
+	\caption{PDFs of Normalized Pseudo Energy Dissipation Rate and Enstrophy}
+	\label{fig:29}
+\end{figure}
 
+\section{Problem 3}
+For HIT, the autocorrelation of $u'$ is
+\[
+\rho(r) = \frac{\langle u'(x,y,z)u'(x+r,y,z)\rangle_{xyz}}{\langle(u')^2\rangle_{xyz}}.
+\]
+From this autocorrelation, the spatial integral scale is created as
+\[
+\Lambda = \int_0^\infty \rho(r)dr.
+\]
+For the HIT data, this is:
+\[
+\Lambda = 10.537147171140688
+\]
+Next the spatial Taylor scale is said to be
+\[
+\lambda^2 = -2\left( \frac{d^2\rho}{dr^2}\rvert_{r=0} \right)^{-1}
+\]
+When the HIT data is considered, it results in:
+\[
+\lambda^2 = 675.9795656051165
+\]
+The resulting autocorrelation $\rho(r)$ is compared with exponential and Gaussian forms in Figure \ref{fig:31}.
 
-
-
-
-
-
-
+\begin{figure}[H]
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/31.png}
+	\caption{Autocorrelation Comparison}
+	\label{fig:31}
+\end{figure}
 
 
 
