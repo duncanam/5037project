@@ -156,6 +156,87 @@ The 2nd moment of $u'$ was calculated using the appropriately-defined mean of th
 
 
 \subsection{HST and HIT PDFs}
+The probability density functions (PDFs) for the HIT and HST data are plotted in Figures \ref{fig:110-hit} and \ref{fig:110-hst}. For the HST case, the u-velocity components have slightly less kurtosis that the rest of the velocity components. One can also note that the HST v-velocity components have some noticeable skew. The HIT data shows that the u and w components have very Gaussian distributions whereas the v component has considerably more kurtosis. This shows that the v-component field in HIT has some bias towards a very consistent velocity, or likely stillness in the HIT case. The HST PDFs show that there is more variation in velocity across the u-component due to the shear layer(s).
+
+
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/110-hit.png}
+	\caption{HIT Data Slice PDFs}
+	\label{fig:110-hit}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/110-hst.png}
+	\caption{HST Data Slice PDFs}
+	\label{fig:110-hst}
+\end{figure}
+
+\section{Problem 2}
+This next section will only consider the HIT data. 
+\subsection{Velocity Gradient Tensor}
+The velocity gradient tensor, 
+\[
+A_{ij}(x,y,z)=\frac{\partial u_i(x,y,z)}{\partial x_j},
+\]
+can be calculated for the HIT data for each point in the volume. When volume-averaged, the result is:
+
+\[\langle A_{ij}\rangle_{xyz}=\begin{bmatrix}
+ 2.74741721e(-08) &  1.24782263e(-02) &  7.31944450e(-06) \\
+ 5.15238234e(-06) & -3.22052239e(-11) &  1.00500736e(-06) \\
+-1.06929170e(-05) & -1.93251442e(-02) & -1.42071821e(-08) \\
+\end{bmatrix}\]
+
+Considering HIT, this result seems to make sense as all gradients should be small due to the isotropy. 
+
+\subsection{Fluctuating Velocity Gradient Tensor Field}
+The fluctuating velocity gradient tensor field, 
+\[
+A'_{ij}(x,y,z) = A_{ij}(x,y,z) - \langle A_{ij}\rangle_{xyz}, 
+\]
+can be computed and the PDFs of the components $A'_{11}$ and $A'_{12}$ are plotted and seen in Figure \ref{fig:22}.
+
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/22.png}
+	\caption{HIT $A_{ij}'$ PDFs for $A_{11}'$ and $A_{12}'$}
+	\label{fig:22}
+\end{figure}
+
+The two PDFs are fairly different in shape. $A'_{12}$ has significantly more kurtosis than $A'_{11}$. $A'_{11}$ has similar shape to Gaussian, with close agreement towards the tails and rising edges. $A'_{12}$ also agrees with Gaussian near the tails and rising edges but drastically overshoots the peak. One can see a similarity to the full volume HIT PDFs in Figure \ref{fig:110-hit} for the v-component in velocity and $A'_{12}$ with the strong central peak. The slight stair-step near the peak seen in the w-component velocity HIT PDF lingers in the $A'_{11}$ PDF. 
+
+\subsection{$A'_{11}$ Skewness and Kurtosis}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
