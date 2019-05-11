@@ -26,7 +26,7 @@
 In this project report, Direct Numerical Simulation (DNS) data was taken and analyzed. Two different kinds of simulations were analyzed, one being Homogeneous Isotropic Turbulence (HIT) and the other being Homogeneous Shear Turbulence (HST). 
 
 \subsection{Max and Min Values}
-The DNS data for HIT and HST cases was put into a min/max function to find the minimum and maximum values for each velocity component in the HIT and HST fields. In meters per second, the results are:
+The DNS data for HIT and HST cases was put into a min/max function to find the minimum and maximum values for each velocity component in the HIT and HST fields. Noting that the data is nondimensionalized, the results are:
 \begin{lstlisting}
 Max HIT u: 0.8576899766921997
 Max HIT v: 0.5416799783706665
@@ -48,7 +48,7 @@ One can notice that the extreme values are in the HST case are of greater magnit
 \subsection{3D Isosurfaces}
 Three-dimensional isosurfaces can be created and plotted for the HIT and HST cases. When visualized, they appear as in Figure \ref{fig:iso}.
 
-\begin{figure}[H]
+\begin{figure}
 \centering
 \begin{subfigure}{0.5\linewidth}
 \centering
@@ -83,8 +83,96 @@ The data can be sliced at certain planes, leaving 2D slices that can be plotted.
 \end{figure}	
 
 \subsection{Spatial Directions}
+For the HIT case, one can see from Figure \ref{fig:13-hit} that the fields are spatially homogeneous and the statistics for these fields are expected to be invariant in all directions. 
 
+For the HST case, one sees from Figure \ref{fig:13-hst} that some fields are homogeneous and some are not. The field has strong variation in the y-direction, across the thin axis of the slice. This is due to the shear, where one would expect to see the two opposing layers of velocity. The other directions x and z are homogeneous and their statistics are expected to be invariant. 
 \subsection{x-z Averages}
+For both the HIT and HST data, x-y averages can be calculated using:
+\[
+\langle u\rangle_{xz} (j)=\frac{1}{N_xN_z}\sum_{k=1}^{N_z}\sum_{i=1}^{N_x}u(i,j,k)
+\]
+These values can then be plotted, and seen in Figure \ref{fig:15}. It is interesting to see that the fluctuations in the HIT case are more or less ``random", whereas there is an incredibly strong linear behavior in the HST x-z average of u. This is displaying the shear that is occurring in the domain. Another interesting feature is that the u and w components in the HIT x-z averages appear to be mirrored across some positive-valued line in velocity. Lastly, the v-components of both HIT and HST are quite small, and the w-component in HST is also quite small. The w-component of HST almost has a sinusoidal shape, with the change in concavity being at the location where the x-y u-average changes sign. This could indicate that u-velocity shear is driving flow in the w-direction.
+
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/15.png}
+	\caption{HIT and HST $u_{i,xz}$ Averages}
+	\label{fig:15}
+\end{figure}
+
+\subsection{HST Fluctuating Velocity}
+The fluctuating velocity can be computed for the HST case utilizing:
+\[
+u'_i(x,y,z)=u(x,y,z)-\langle u_i\rangle_{xz}(y)
+\]
+Slices can be taken at k=[1, 128, 256] to create two-dimensional visualizations, seen in Figure \ref{fig:16}. Something really interesting happens when the fluctuating HST velocities are compared with the standard slice velocities in Figure \ref{fig:13-hst}. The v and w components have similar structures in both normal slices and the fluctuation slices, but the u components are significantly different in structure. 
+
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/16.png}
+	\caption{HST Fluctuating Velocity Slices}
+	\label{fig:16}
+\end{figure}
+
+\subsection{HIT Fluctuating Velocity}
+The fluctuating velocity can be computed for the HIT case utilizing:
+\[
+u'_i(x,y,z)=u(x,y,z)-\langle u_i\rangle_{xyz}
+\]
+Note that there is a new average definition here that encompasses the entire volume:
+\[
+\langle u\rangle_{xyz}=\frac{1}{N_xN_yN_z}\sum_{k=1}^{N_z}\sum_{j=1}^{N_y}\sum_{i=1}^{N_x}u(i,j,k)
+\]
+When this is done, it obtains the figure seen in Figure \ref{fig:17}. When compared to Figure \ref{fig:13-hit} one can see that the structure and magnitude of the fields themselves don't change all that much. This is likely because the average itself is fairly small due to the nature of the HIT field and therefore the average won't change the fluctuating field significantly. 
+
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/17.png}
+	\caption{HIT Fluctuating Velocity Slices}
+	\label{fig:17}
+\end{figure}
+
+\subsection{Reynolds Stresses}
+Now one can calculate the HST Reynolds stresses which are defined as $\langle u_i'u_j'\rangle_{xz}(y)$ since the fluctuating velocities were previously calculated. Additionally, a comparison can be done with the HIT full-volume Reynolds stresses, where instead the full volume average is utilized such that the Reynolds stresses take the form $\langle u_i'u_j'\rangle_{xyz}$. When plotted against each other, the result takes the form in Figure \ref{fig:18}.
+
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/18.png}
+	\caption{HIT and HST Reynolds Stresses}
+	\label{fig:18}
+\end{figure}
+
+Since the average definitions are different, it can be seen that the HST data has fluctuating Reynolds stresses and the HIT data has constant Reynolds stresses. For some components, the HIT Reynolds stress is significantly lower than the HST, such as in in $u'u'$ and $w'w'$. Others, such as $v'u'$ (and it's identical twin as the matrix is symmetric) have the HIT Reynolds stress as the peak value. It is noted that the diagonal components tend to have lower Reynolds stresses whereas the off-diagonal components besides $w'u'$ and $u'w'$ have higher Reynolds stresses for HIT when compared to HST. This makes sense, as stresses should be higher in directions of opposing velocity. Recall that it was mentioned that in the HST case, statistics should be homogeneous except in the y-direction. One can see that in the $w'u'$ and $u'w'$ cases as well as the diagonal the effects of the shear layer are present. 
+
+\subsection{Moments, Skewness, and Kurtosis of $u'$}
+The 2nd moment of $u'$ was calculated using the appropriately-defined mean of the nth-moment's nth power of $u'$ for each data set, either HIT or HST. Then $\sigma$ was calculated for each set and skewness was obtained by dividing the third moment by the cube of $\sigma$ and kurtosis was calculated by dividing the fourth moment by $\sigma^4$. The skewness and kurtosis was then plotted for HST and HIT and is seen in Figure \ref{fig:19}, where S represents skewness and K represents kurtosis. In terms of a Gaussian plot, changing the skewness will alter the ``tails" of the PDF plot by changing the lengths of these tails and how far the PDF plot is skewed to one side or another. The larger the skewness, the more the PDF will be ``leaning" to one side, with positive and negative skewness denoting direction. The kurtosis gives effective thickness of these tails, with high kurtosis giving a much spikier, thin PDF whereas a low kurtosis gives a smoother PDF with a rounder shape. The HIT data has relatively low skewness and higher kurtosis, so this means that the resulting PDF won't be leaning much but will be thin. The HST data ranges across many values. Values on the edges should be skewed with higher kurtosis whereas values towards the middle of the data should be more Gaussian. This will be explored next. 
+
+\begin{figure}
+	\centering
+	\includegraphics[ width=\linewidth]{./figures/19.png}
+	\caption{Skewness and Kurtosis for HST and HIT}
+	\label{fig:19}
+\end{figure}
+
+
+\subsection{HST and HIT PDFs}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -95,3 +183,5 @@ The data can be sliced at certain planes, leaving 2D slices that can be plotted.
 %\bibliographystyle{ieeetr}
 
 \end{document}
+
+
